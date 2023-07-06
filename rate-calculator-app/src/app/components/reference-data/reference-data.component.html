@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Reference Data</h2>
+
+  <div class="row">
+    <!-- <div class="col-md-4 mt-4">
+      <pre>Select the data you want to edit: </pre>
+    </div> -->
+    <div class="col-md-3">
+      <select class="form-select mb-4 mt-4" [(ngModel)]="refData">
+        <option *ngFor="let item of list" [value]="item">{{item}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+  
+ <div *ngIf="refData === 'Product table fields'">
+  <app-product-fields></app-product-fields>
+ </div> 
+
+ <div *ngIf="refData === 'Material'">
+  <app-materials></app-materials>
+ </div> 

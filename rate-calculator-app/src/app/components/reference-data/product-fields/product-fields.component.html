@@ -1,0 +1,136 @@
+<div class="container">
+  <h3>Product Fields Table</h3>
+
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <input type="text" class="form-control" placeholder="Search by Name" [(ngModel)]="filterTerm"
+        (input)="filterFields($event)" />
+    </div>
+    <div class="col-md-4 mt5p">
+      <button class="btn btn-sm btn-primary" (click)="addField()">Add Field</button>
+      <button class="btn btn-sm btn-secondary" (click)="clear()">Clear</button>
+    </div>
+    <div class="col-md-2 mt5p">
+
+    </div>
+
+  </div>
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th (click)="sortFields('name')">Name</th>
+        <th (click)="sortFields('label')">Label</th>
+        <th (click)="sortFields('type')">Type</th>
+        <th (click)="sortFields('required')">Required</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let field of filteredFormConfig let i = index">
+        <tr>
+          <td>  
+            <span *ngIf="!field.editing">{{ field.name }}</span>
+            <input *ngIf="field.editing" type="text" class="form-control" [(ngModel)]="field.name" />
+          </td>
+          <td>
+            <span *ngIf="!field.editing">{{ field.label }}</span>
+            <input *ngIf="field.editing" type="text" class="form-control" [(ngModel)]="field.label" />
+          </td>
+          <td>
+            <span *ngIf="!field.editing">{{ field.type }}</span>
+            <select *ngIf="field.editing" class="form-select" (ngModelChange)="typeChange($event, field)"
+              [(ngModel)]="field.type">
+              <option value="text">Text</option>
+              <option value="number">Number</option>
+              <option value="nested">Nested</option>
+            </select>
+            <!-- <input *ngIf="field.editing" type="text" class="form-control" [(ngModel)]="field.type" /> -->
+          </td>
+          <td>
+            <span *ngIf="!field.editing">{{ field.required ? 'Yes' : 'No' }}</span>
+            <input *ngIf="field.editing" type="checkbox" [(ngModel)]="field.required" />
+          </td>
+          <td>
+            <ng-container *ngIf="field.fields?.length">
+            <span class="expIcn"  (click)="field.expanded = !field.expanded">
+              <ng-container *ngIf="field.expanded; else collapsedIcon">-</ng-container>
+              <ng-template #collapsedIcon>+</ng-template>
+            </span>
+            </ng-container>
+            <button class="btn btn-sm btn-primary mb-1" (click)="editField(field)" *ngIf="!field.editing">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-success mb-1" (click)="saveField(field)" *ngIf="field.editing">
+              Save
+            </button>
+            <button class="btn btn-sm btn-secondary mb-1" (click)="cancel(field)" *ngIf="field.editing">
+              Cancel
+            </button>
+            <button class="btn btn-sm btn-danger mb-1" (click)="deleteField(field)">Delete</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="field.type=='nested' && field.expanded">
+          <td colspan="5">
+            <table class="table nested-table table-bordered">
+              <!-- <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Label</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Actions</th>
+                </tr>
+              </thead> -->
+              <tbody>
+                <tr *ngFor="let nestedField of field.fields">
+                  <td>
+                    <span *ngIf="!nestedField.editing">{{ nestedField.name }}</span>
+                    <input *ngIf="nestedField.editing" type="text" class="form-control"
+                      [(ngModel)]="nestedField.name" />
+                  </td>
+                  <td>
+                    <span *ngIf="!nestedField.editing">{{ nestedField.label }}</span>
+                    <input *ngIf="nestedField.editing" type="text" class="form-control"
+                      [(ngModel)]="nestedField.label" />
+                  </td>
+                  <td>
+                    <span *ngIf="!nestedField.editing">{{ nestedField.type }}</span>
+                    <!-- <input *ngIf="nestedField.editing" type="text" class="form-control" 
+                      [(ngModel)]="nestedField.type" />-->
+                    <select *ngIf="nestedField.editing" class="form-select" [(ngModel)]="nestedField.type">
+                      <option value="text">Text</option>
+                      <option value="number">Number</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span *ngIf="!nestedField.editing">{{ nestedField.required ? 'Yes' : 'No' }}</span>
+                    <input *ngIf="nestedField.editing" type="checkbox" [(ngModel)]="nestedField.required" />
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-primary mb-2" (click)="editField(nestedField)"
+                      *ngIf="!nestedField.editing">
+                      Edit
+                    </button>
+                    <button class="btn btn-sm btn-success mb-2" (click)="saveNestedField(nestedField)" *ngIf="nestedField.editing">
+                    Save
+                    </button>
+                    <button class="btn btn-sm btn-secondary mb-2" (click)="cancel(nestedField)" *ngIf="nestedField.editing">
+                      Cancel
+                    </button>
+                    <button class="btn btn-sm btn-danger mb-2" (click)="deleteField(nestedField)">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
+</div>

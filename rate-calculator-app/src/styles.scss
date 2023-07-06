@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+//change all button style using element selector
+button {
+    margin-right: 10px;
+}
+
+// add margin to input type text
+input[type=text] {
+    margin-right: 10px;
+}

@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <h4 class="modal-title">Product Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="onCloseClick()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="productForm">
+        <!-- <div *ngFor="let field of productFields">
+            <div *ngIf="field.type !== 'nested'" class="form-group"> -->
+                <!-- Render the non-nested fields -->
+      <div class="row">
+        <div class="col-md-2" *ngFor="let field of productFields; let i = index">
+          <div class="form-group mb-3" *ngIf="field.type !== 'nested'">
+                <label>{{ field.label }}</label>
+                <input [type]="field.type" class="form-control" [formControlName]="field.name"
+                    [required]="field.required">
+                <div *ngIf="productForm.controls[field.name].invalid && productForm.controls[field.name].touched"
+                    class="text-danger">
+                    This field is required.
+                </div>
+            </div>
+        </div>
+        </div>
+            
+
+        <div *ngFor="let field of productFields; let i = index">   
+        <div *ngIf="field.type === 'nested'">
+            <h5>{{ field.label }}</h5>
+            <div class="nested-fields" formArrayName="{{ field.name }}">
+                <div *ngFor="let nestedRow of productForm.get(field.name)?.value; let rowIndex = index"
+                    [formGroupName]="rowIndex" class="d-flex ">
+                    <div class="nested-field mrgn5" *ngFor="let nestedField of field.fields">
+                        <label>{{ nestedField.label }}</label>
+                        <input [type]="nestedField.type" class="form-control " [formControlName]="nestedField.name">
+                    </div>
+                    <div class="nested-field-actions crossBtn">
+                        <button type="button" class="btn btn-danger btn-sm"
+                            (click)="onRemoveNestedRowClick(field.name, rowIndex)">
+                            X
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm mt-2 mb-3" (click)="onAddNestedRowClick(field.name)">
+                Add Row
+            </button>
+        </div>
+
+
+    </div>
+
+
+        <!-- </div> -->
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onUpdateClick()">Update</button>
+    <button type="button" class="btn btn-secondary" (click)="onCloseClick()">Close</button>
+</div>

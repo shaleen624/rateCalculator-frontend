@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <h2>Materials</h2>
+    <div class="row">
+    <div class="col-md-2">
+      <input type="text" class="form-control" [(ngModel)]="filterTerm" (keyup)="filterReferenceData()"
+        placeholder="Filter by Item" />
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="searchReferenceData()" placeholder="Search by Item" />
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-sm btn-primary mb-2" (click)="addNewRow()">Add</button>
+      <button class="btn btn-sm btn-secondary mb-2" (click)="clear()">Clear</button>
+    </div>
+    </div>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Category</th>
+          <th>Rate</th>
+          <th>Unit</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of filteredReferenceData">
+          <td>
+            <span *ngIf="!row.editMode">{{ row.item }}</span>
+            <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.item" />
+          </td>
+          <td>
+            <span *ngIf="!row.editMode">{{ row.category }}</span>
+            <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.category" />
+          </td>
+          <td>
+            <span *ngIf="!row.editMode">{{ row.rate }}</span>
+            <input *ngIf="row.editMode" type="number" class="form-control" [(ngModel)]="row.rate" />
+          </td>
+          <td>
+            <span *ngIf="!row.editMode">{{ row.unit }}</span>
+            <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.unit" />
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary" *ngIf="!row.editMode && !addingNewRow"
+              (click)="editRow(row)">Edit</button>
+            <button class="btn btn-sm btn-success mb-2" *ngIf="row.editMode"
+              (click)="updateReferenceData(row._id,row)">Save</button>
+            <button class="btn btn-sm btn-secondary mb-2" *ngIf="row.editMode" (click)="cancelEdit(row)">Cancel</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteReferenceData(row._id)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="addingNewRow">
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="newRow.item" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="newRow.category" />
+          </td>
+          <td>
+            <input type="number" class="form-control" [(ngModel)]="newRow.rate" />
+          </td>
+          <td>
+            <input type="text" class="form-control" [(ngModel)]="newRow.unit" />
+          </td>
+          <td>
+            <button class="btn btn-success mb-3" (click)="createReferenceData(newRow)">Save</button>
+            <button class="btn btn-secondary mb-3" (click)="cancelNewRow()">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

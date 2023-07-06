@@ -1,0 +1,60 @@
+<div class="container">
+    <form [formGroup]="productForm" *ngIf="productForm" (ngSubmit)="saveProduct()">
+  
+      <!-- Render the nested components here -->
+      <div class="row">
+        <ng-container *ngFor="let field of formConfig; let i = index">
+          <div *ngIf="field.type === 'nested'" class="mb-3 col-md-6">
+            <table class="table nested-table">
+              <thead>
+                <tr>
+                  <th *ngFor="let nestedField of field.fields">{{ nestedField.label }}</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="{{ field.name }}">
+                <tr *ngFor="let nestedRow of productForm.get(field.name)?.value; let rowIndex = index"
+                  [formGroupName]="rowIndex">
+                  <td *ngFor="let nestedField of field.fields">
+                    <ng-container [ngSwitch]="nestedField.type">
+                      <td *ngSwitchCase="'text'">
+                        <input [type]="nestedField.type" class="form-control form-control-sm"
+                          [formControlName]="nestedField.name" (change)="calculateTotalPrice()">
+                      </td>
+                      <td *ngSwitchCase="'number'">
+                        <input [type]="nestedField.type" class="form-control form-control-sm"
+                          [formControlName]="nestedField.name" (change)="calculateTotalPrice()">
+                      </td>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-danger"
+                      (click)="removeNestedRow(field.name, rowIndex)">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn btn-sm btn-primary" (click)="addNestedRow(field.name)">Add Row</button>
+          </div>
+        </ng-container>
+      </div>
+  
+      <!-- Render the non-nested fields -->
+      <div class="row">
+        <div class="col-md-2" *ngFor="let field of formConfig; let i = index">
+          <div class="form-group mb-3" *ngIf="field.type !== 'nested'">
+            <label>{{ field.label }}</label>
+            <input [type]="field.type" class="form-control form-control-sm" [formControlName]="field.name"
+              [required]="field.required" (change)="calculateTotalPrice()">
+            <div *ngIf="productForm.controls[field.name].invalid && productForm.controls[field.name].touched"
+              class="text-danger">This field is required.</div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Add button to submit the form -->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="productForm.invalid">Save</button>
+      <button type="button" (click)="clear()" class="btn btn-sm btn-outline-secondary">Clear</button>
+    </form>
+  </div>
+  

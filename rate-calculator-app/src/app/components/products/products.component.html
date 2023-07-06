@@ -1,0 +1,32 @@
+<!-- Product Details Popup -->
+<app-product-details-popup
+  [product]="selectedProduct"
+  [productFields]="productFields"
+  *ngIf="isPopupOpen"
+  (closeProductDetails)="closeProductDetails()">
+</app-product-details-popup>
+
+<table class="table">
+  <thead>
+    <tr>
+      <ng-container *ngFor="let field of productFields">
+
+        <th *ngIf="field.required">{{ field.label }}</th>
+      </ng-container>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <ng-container *ngFor="let field of productFields">
+        <td *ngIf="field.required">{{ product[field.name] }}</td>
+      </ng-container>
+      <td>
+        <button class="btn btn-sm btn-primary" (click)="openProductDetails(product)">View</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+

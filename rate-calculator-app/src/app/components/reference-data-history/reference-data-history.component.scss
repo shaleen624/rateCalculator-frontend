@@ -1,0 +1,40 @@
+.scroll-container {
+    height: 400px; /* Set the desired height for the scrolling container */
+    overflow-y: auto;
+  }
+  
+  .loading-message {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .ngb-dp-calendar {
+    max-width: 20rem; /* Adjust the width as needed */
+  }
+  pre {
+    margin-bottom: 2px;
+  }
+
+  //Sorting
+
+.sort-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  vertical-align: middle;
+  transition: transform 0.2s ease-in-out;
+}
+
+.asc {
+  border-bottom: 5px solid #000;
+}
+
+.desc {
+  border-top: 5px solid #000;
+}
+
+th {
+  cursor: pointer;
+}

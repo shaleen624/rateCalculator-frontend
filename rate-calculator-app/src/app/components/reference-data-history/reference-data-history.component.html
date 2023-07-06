@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row my-3">
+    <input class="form-control col" type="text" [(ngModel)]="searchTerm" (keyup)="searchHistory()"
+      placeholder="Search by Item" />
+
+    <!-- Filter dropdown -->
+    <select [(ngModel)]="filterOption" class="form-control col mx-2" (change)="filterHistory()">
+      <option value="all">All</option>
+      <option value="create">Create</option>
+      <option value="update">Update</option>
+      <option value="delete">Delete</option>
+    </select>
+
+    <!-- Date range search -->
+    <!-- <input type="text" placeholder="Start Date" [readonly]="true" [ngModel]="startDate" (ngModelChange)="startDate = $event" (focus)="datePickerStart.toggle()" /> -->
+    <input type="text" class="form-control col" placeholder="Start Date" [ngModel]="startDate"
+      (ngModelChange)="startDate = $event" />
+    <!-- <ngb-datepicker #datePickerStart [(ngModel)]="startDate" (ngModelChange)="updateDateRange()"></ngb-datepicker> -->
+
+    <!-- <input type="text" placeholder="End Date" [readonly]="true" [ngModel]="endDate" (ngModelChange)="endDate = $event" (focus)="datePickerEnd.toggle()" /> -->
+    <input type="text" class="form-control col" placeholder="End Date" [ngModel]="endDate"
+      (ngModelChange)="endDate = $event" />
+    <!-- <ngb-datepicker #datePickerEnd [(ngModel)]="endDate" (ngModelChange)="updateDateRange()"></ngb-datepicker> -->
+
+    <button (click)="updateDateRange()" class="btn btn-primary col">Search</button>
+  </div>
+
+  <table class="table table-sm table-bordered table-hover">
+    <thead>
+      <tr>
+        <th (click)="sortData('referenceDataId')">Item ID
+          <span class="sort-icon" [ngClass]="{'asc': sortKey === 'newData' && sortDirection === 'asc', 'desc': sortKey === 'newData' && sortDirection === 'desc'}"></span>
+        </th>
+        <th (click)="sortData('action')">Action
+          <span class="sort-icon" [ngClass]="{'asc': sortKey === 'newData' && sortDirection === 'asc', 'desc': sortKey === 'newData' && sortDirection === 'desc'}"></span>
+        </th>
+        <th (click)="sortData('oldData')">Old Data
+          <span class="sort-icon" [ngClass]="{'asc': sortKey === 'newData' && sortDirection === 'asc', 'desc': sortKey === 'newData' && sortDirection === 'desc'}"></span>
+        </th>
+        <th (click)="sortData('newData')">New Data
+          <span class="sort-icon" [ngClass]="{'asc': sortKey === 'newData' && sortDirection === 'asc', 'desc': sortKey === 'newData' && sortDirection === 'desc'}"></span>
+        </th>
+        <th (click)="sortData('timestamp')">Timestamp
+          <span class="sort-icon" [ngClass]="{'asc': sortKey === 'newData' && sortDirection === 'asc', 'desc': sortKey === 'newData' && sortDirection === 'desc'}"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-striped ">
+      <tr *ngFor="let history of filteredHistory">
+
+        <td>{{ history.referenceDataId }}</td>
+        <td>{{ history.action }}</td>
+        <!-- <td>{{ history.oldData|json }}</td> -->
+        <td>
+          <pre>Item: {{ history?.oldData?.item}}</pre>
+          <pre>Rate: {{ history?.oldData?.rate}}</pre>
+          <pre>Unit: {{ history?.oldData?.unit}}</pre>
+        </td>
+        <td>
+          <pre>Item: {{ history?.newData?.item}}</pre>
+          <pre>Rate: {{ history?.newData?.rate}}</pre>
+          <pre>Unit: {{ history?.newData?.unit}}</pre>
+        </td>
+        <td>{{ history.timestamp | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="scroll-container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300"
+    (scrolled)="onScroll()">
+    <div *ngIf="isLoading" class="loading-message">Loading more data...</div>
+  </div>
+
+</div>
