@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BASE_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReferenceDataService {
-  private baseUrl = 'http://localhost:3000'; // Update the server URL if necessary
+  private baseUrl = BASE_URL; // Update the server URL if necessary
 
   constructor(private http: HttpClient) {}
 

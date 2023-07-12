@@ -1,3 +1,6 @@
+export const BASE_URL = "http://rc-dev.fluffpandastore.com:3000";
+//export const BASE_URL = 'http://localhost:3000'
+
 export const nestedFieldsSample = [{ name: 'type', label: 'Type', type: 'text', required: true , editing: true},
 { name: 'rate', label: 'Rate', type: 'number', required: true , editing: true},
 { name: 'qty', label: 'Qty', type: 'number', required: true , editing: true},

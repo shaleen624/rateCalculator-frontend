@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BASE_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = 'http://localhost:3000/products';
+  private baseUrl = BASE_URL;
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}`);
+    return this.http.get<any>(`${this.baseUrl}/products`);
   }
 
   addProduct(product: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}`, product);
+    return this.http.post<any>(`${this.baseUrl}/products`, product);
   }
 
   editProduct( product: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/${product.id}`, product);
+    return this.http.put<any>(`${this.baseUrl}/products/${product.id}`, product);
   }
 
   deleteProduct(productId: string): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/${productId}`);
+    return this.http.delete<any>(`${this.baseUrl}/products/${productId}`);
   }
 }

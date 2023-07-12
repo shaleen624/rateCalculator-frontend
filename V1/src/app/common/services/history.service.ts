@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BASE_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = BASE_URL;
 
   constructor(private http: HttpClient) { }
 
