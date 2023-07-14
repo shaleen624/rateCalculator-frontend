@@ -1,6 +1,6 @@
-//export const BASE_URL = "https://rc-dev.fluffpandastore.com";
+export const BASE_URL = "https://rc-dev.fluffpandastore.com";
 //export const BASE_URL = "http://52.77.95.53:3000";
-export const BASE_URL = 'http://localhost:3000';
+//export const BASE_URL = 'http://localhost:3000';
 
 export const nestedFieldsSample = [
   { name: 'type', label: 'Type', type: 'text', required: true, editing: true },
