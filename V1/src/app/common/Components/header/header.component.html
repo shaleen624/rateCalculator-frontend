@@ -2,15 +2,17 @@
   <div class="container">
     <a class="navbar-brand" href="#">Rate Calculator App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="isMenuCollapsed = !isMenuCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/reference-data">Reference Data</a>
-        </li><li class="nav-item">
-          <a class="nav-link" routerLink="/history">History</a>
+          <a class="nav-link" routerLink="/reference-data" (click)="isMenuCollapsed = true">Reference Data</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/history" (click)="isMenuCollapsed = true">History</a>
         </li>
       </ul>
     </div>

@@ -9,7 +9,7 @@ const routes: Routes = [
   //{ path: '', component: LandingPageComponent },
   { path: '', component: ProductsComponent },
   { path: 'reference-data', component: ReferenceDataComponent },
-  { path: 'history', component: ProductsComponent },
+  { path: 'history', component: ReferenceDataHistoryComponent },
   
 ];
 
