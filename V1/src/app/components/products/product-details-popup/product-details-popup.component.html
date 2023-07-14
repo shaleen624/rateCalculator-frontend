@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Product Details</h4>
-    <button type="button" class="close" aria-label="Close" (click)="onCloseClick()">
-        <span aria-hidden="true">&times;</span>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <!-- <span aria-hidden="true">&times;</span> -->
     </button>
 </div>
 <div class="modal-body">
@@ -35,14 +35,14 @@
                         <input [type]="nestedField.type" class="form-control " [formControlName]="nestedField.name">
                     </div>
                     <div class="nested-field-actions crossBtn">
-                        <button type="button" class="btn btn-danger btn-sm"
+                        <button type="button" class="btn btn-outline-danger btn-sm"
                             (click)="onRemoveNestedRowClick(field.name, rowIndex)">
                             X
                         </button>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm mt-2 mb-3" (click)="onAddNestedRowClick(field.name)">
+            <button type="button" class="btn btn-outline-primary btn-sm mt-2 mb-3" (click)="onAddNestedRowClick(field.name)">
                 Add Row
             </button>
         </div>
@@ -55,6 +55,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onUpdateClick()">Update</button>
-    <button type="button" class="btn btn-secondary" (click)="onCloseClick()">Close</button>
+    <button type="button" class="btn btn-outline-success" [disabled]="productForm.invalid" (click)="onUpdateClick()">{{saveLabel}}</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Close btn click')">Close</button>
 </div>

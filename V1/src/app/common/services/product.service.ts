@@ -20,7 +20,7 @@ export class ProductService {
   }
 
   editProduct( product: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/products/${product.id}`, product);
+    return this.http.put<any>(`${this.baseUrl}/products/${product._id}`, product);
   }
 
   deleteProduct(productId: string): Observable<any> {

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ADD_PRODUCT_MOCK } from 'src/app/common/constants';
 
 @Component({
   selector: 'app-product-details-popup',
@@ -10,26 +11,33 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ProductDetailsPopupComponent {
   @Input() product: any;
   @Input() productFields!: any[];
-  @Output() closeProductDetails: EventEmitter<void> = new EventEmitter<void>();
-  @Output() updateProduct: EventEmitter<any> = new EventEmitter<any>();
-
+ // @Output() closeProductDetails: EventEmitter<void> = new EventEmitter<void>();
+ // @Output() updateProduct: EventEmitter<any> = new EventEmitter<any>();
+  saveLabel= "Update";
   productForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    public activeModal: NgbActiveModal) {
   }
 
   ngOnInit () {
+    this.saveLabel = "Update"
     this.productForm = this.formBuilder.group({});
+    if (this.product) {
     this.buildForm();
+    } else {
+      this.createForm();
+      this.saveLabel = "Add"
+    }
   }
 
   ngOnChanges() {
     if (this.product) {
       this.buildForm();
-    }
+    } 
   }
-
+  // Form for update operation
   buildForm() {
     this.productFields.forEach((field) => {
       if (field.type !== 'nested') {
@@ -48,10 +56,25 @@ export class ProductDetailsPopupComponent {
     });
   }
 
-  onCloseClick() {
-    this.closeProductDetails.emit();
-    this.modalService.dismissAll();
+  // Form for create product.
+  createForm() {
+    const formGroup:any = {};
+    for (const field of this.productFields) {
+      if (field.type === 'nested') {
+        const nestedGroup:any = this.formBuilder.array([]);
+        formGroup[field.name] = nestedGroup;
+        nestedGroup.push(this.createNestedFormGroup());
+      } else {
+        formGroup[field.name] = field.required ? ['', Validators.required] : '';
+      }
+    }
+    this.productForm = this.formBuilder.group(formGroup);
+
+    // Set mock values
+    this.productForm.setValue(ADD_PRODUCT_MOCK);
   }
+
+
 
   onUpdateClick() {
     if (this.productForm.valid) {
@@ -59,20 +82,10 @@ export class ProductDetailsPopupComponent {
         ...this.product,
         ...this.productForm.value
       };
-      this.updateProduct.emit(updatedProduct);
+      this.activeModal.close(updatedProduct)
+      //this.updateProduct.emit(updatedProduct);
     }
   }
-
-  // onAddNestedRowClick(fieldName: string) {
-  //   const nestedRows = this.productForm.get(fieldName) as FormArray;
-  //   const nestedFormGroup = this.formBuilder.group({});
-  //   this.productFields.forEach((field) => {
-  //     if (field.type !== 'nested') {
-  //       nestedFormGroup.addControl(field.name, new FormControl(''));
-  //     }
-  //   });
-  //   nestedRows.push(nestedFormGroup);
-  // }
 
   onAddNestedRowClick(fieldName: string) {
     const nestedArray = this.productForm.get(fieldName) as FormArray;

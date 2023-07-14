@@ -44,4 +44,18 @@ export class ReferenceDataService {
   getAllProductFileds(): Observable<any> {
     return this.http.get(`${this.baseUrl}/product-fields`);
   }
+
+  createProdcuctField(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/product-fields`, data);
+  }
+
+  updateProdcuctField(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/product-fields/${id}`, data);
+  }
+
+  deleteProductField(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/product-fields/${id}`);
+  }
+
+
 }

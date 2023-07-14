@@ -7,8 +7,8 @@
         (input)="filterFields($event)" />
     </div>
     <div class="col-md-4 mt5p">
-      <button class="btn btn-sm btn-primary" (click)="addField()">Add Field</button>
-      <button class="btn btn-sm btn-secondary" (click)="clear()">Clear</button>
+      <button class="btn btn-sm btn-outline-primary" (click)="addField()">Add Field</button>
+      <button class="btn btn-sm btn-outline-secondary" (click)="clear()">Clear</button>
     </div>
     <div class="col-md-2 mt5p">
 
@@ -59,16 +59,16 @@
               <ng-template #collapsedIcon>+</ng-template>
             </span>
             </ng-container>
-            <button class="btn btn-sm btn-primary mb-1" (click)="editField(field)" *ngIf="!field.editing">
+            <button class="btn btn-sm btn-outline-primary mb-1" (click)="editField(field)" *ngIf="!field.editing">
               Edit
             </button>
-            <button class="btn btn-sm btn-success mb-1" (click)="saveField(field)" *ngIf="field.editing">
+            <button class="btn btn-sm btn-outline-success mb-1" (click)="saveField(field)" *ngIf="field.editing">
               Save
             </button>
-            <button class="btn btn-sm btn-secondary mb-1" (click)="cancel(field)" *ngIf="field.editing">
+            <button class="btn btn-sm btn-outline-secondary mb-1" (click)="cancel(field)" *ngIf="field.editing">
               Cancel
             </button>
-            <button class="btn btn-sm btn-danger mb-1" (click)="deleteField(field)">Delete</button>
+            <button class="btn btn-sm btn-outline-danger mb-1" (click)="deleteField(field)">X</button>
           </td>
         </tr>
 
@@ -110,17 +110,17 @@
                     <input *ngIf="nestedField.editing" type="checkbox" [(ngModel)]="nestedField.required" />
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-primary mb-2" (click)="editField(nestedField)"
+                    <button class="btn btn-sm btn-outline-primary mb-2" (click)="editField(nestedField)"
                       *ngIf="!nestedField.editing">
                       Edit
                     </button>
-                    <button class="btn btn-sm btn-success mb-2" (click)="saveNestedField(nestedField)" *ngIf="nestedField.editing">
+                    <button class="btn btn-sm btn-outline-success mb-2" (click)="saveNestedField(nestedField)" *ngIf="nestedField.editing">
                     Save
                     </button>
-                    <button class="btn btn-sm btn-secondary mb-2" (click)="cancel(nestedField)" *ngIf="nestedField.editing">
+                    <button class="btn btn-sm btn-outline-secondary mb-2" (click)="cancel(nestedField)" *ngIf="nestedField.editing">
                       Cancel
                     </button>
-                    <button class="btn btn-sm btn-danger mb-2" (click)="deleteField(nestedField)">
+                    <button class="btn btn-sm btn-outline-danger mb-2" (click)="deleteField(nestedField)">
                       Delete
                     </button>
                   </td>

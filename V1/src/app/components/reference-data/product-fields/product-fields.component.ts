@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { nestedFieldsSample } from 'src/app/common/constants';
+import { ReferenceDataService } from 'src/app/common/services/reference-data-service.service';
 
 @Component({
   selector: 'app-product-fields',
@@ -13,10 +14,11 @@ export class ProductFieldsComponent implements OnInit {
   filteredFormConfig!: any[];
   sortField!: string;
   sortOrder!: 'asc' | 'desc';
-  apiUrl = 'http://localhost:3000/product-fields'; // Replace with your API endpoint
+  //apiUrl = 'http://localhost:3000/product-fields'; // Replace with your API endpoint
   filterTerm: string = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private refDataSvc: ReferenceDataService) {
     this.formConfig = [];
     this.filteredFormConfig = [];
     this.sortField = '';
@@ -43,7 +45,7 @@ export class ProductFieldsComponent implements OnInit {
   }
 
   getProductFields(): void {
-    this.http.get<any[]>(this.apiUrl).subscribe(
+    this.refDataSvc.getAllProductFileds().subscribe(
       (response) => {
         this.formConfig = response;
         this.filteredFormConfig = response;
@@ -113,7 +115,8 @@ export class ProductFieldsComponent implements OnInit {
     if (field.type !== 'nested' && field.fields && field.fields.length) delete field.fields;
     if (!field._id) {
       // Add new field
-      this.http.post<any>(this.apiUrl, field).subscribe(
+      //this.http.post<any>(this.apiUrl, field).subscribe(
+        this.refDataSvc.createProdcuctField(field).subscribe(
         (response) => {
           field._id = response._id;
           field.editing = false;
@@ -125,7 +128,8 @@ export class ProductFieldsComponent implements OnInit {
       );
     } else {
       // Update existing field
-      this.http.put<any>(`${this.apiUrl}/${field._id}`, field).subscribe(
+      //this.http.put<any>(`${this.apiUrl}/${field._id}`, field).subscribe(
+      this.refDataSvc.updateProdcuctField(field._id, field).subscribe(
         () => {
           field.editing = false;
           if (field.fields && field.fields.length) this.toggleEditingNestedFields(field.fields, false);
@@ -139,7 +143,8 @@ export class ProductFieldsComponent implements OnInit {
 
   deleteField(field: any): void {
     if (field._id) {
-      this.http.delete<any>(`${this.apiUrl}/${field._id}`).subscribe(
+      this.refDataSvc.deleteProductField(field._id).subscribe(
+      //this.http.delete<any>(`${this.apiUrl}/${field._id}`).subscribe(
         () => {
           const index = this.filteredFormConfig.indexOf(field);
           if (index !== -1) {

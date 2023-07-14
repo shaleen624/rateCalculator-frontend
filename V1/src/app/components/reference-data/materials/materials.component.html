@@ -1,16 +1,16 @@
 <div class="container mt-4">
     <h2>Materials</h2>
     <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 mb-3">
       <input type="text" class="form-control" [(ngModel)]="filterTerm" (keyup)="filterReferenceData()"
         placeholder="Filter by Item" />
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 mb-3">
       <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="searchReferenceData()" placeholder="Search by Item" />
     </div>
     <div class="col-md-4">
-      <button class="btn btn-sm btn-primary mb-2" (click)="addNewRow()">Add</button>
-      <button class="btn btn-sm btn-secondary mb-2" (click)="clear()">Clear</button>
+      <button class="btn btn-sm btn-outline-secondary mb-2" (click)="clear()">Reset</button>
+      <button class="btn btn-sm btn-outline-primary mb-2" (click)="addNewRow()">Add New</button>
     </div>
     </div>
   
@@ -43,12 +43,12 @@
             <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.unit" />
           </td>
           <td>
-            <button class="btn btn-sm btn-primary" *ngIf="!row.editMode && !addingNewRow"
+            <button class="btn btn-sm btn-outline-primary mb-2" *ngIf="!row.editMode && !addingNewRow"
               (click)="editRow(row)">Edit</button>
-            <button class="btn btn-sm btn-success mb-2" *ngIf="row.editMode"
+            <button class="btn btn-sm btn-outline-success mb-2" *ngIf="row.editMode"
               (click)="updateReferenceData(row._id,row)">Save</button>
-            <button class="btn btn-sm btn-secondary mb-2" *ngIf="row.editMode" (click)="cancelEdit(row)">Cancel</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteReferenceData(row._id)">Delete</button>
+            <button class="btn btn-sm btn-outline-secondary mb-2" *ngIf="row.editMode" (click)="cancelEdit(row)">Cancel</button>
+            <button class="btn btn-sm btn-outline-danger mb-2" (click)="deleteReferenceData(row._id)">X</button>
           </td>
         </tr>
         <tr *ngIf="addingNewRow">
@@ -65,8 +65,8 @@
             <input type="text" class="form-control" [(ngModel)]="newRow.unit" />
           </td>
           <td>
-            <button class="btn btn-success mb-3" (click)="createReferenceData(newRow)">Save</button>
-            <button class="btn btn-secondary mb-3" (click)="cancelNewRow()">Cancel</button>
+            <button class="btn btn-success mb-2" (click)="createReferenceData(newRow)">Save</button>
+            <button class="btn btn-secondary mb-2" (click)="cancelNewRow()">Cancel</button>
           </td>
         </tr>
       </tbody>

@@ -5,7 +5,10 @@
   *ngIf="isPopupOpen"
   (closeProductDetails)="closeProductDetails()">
 </app-product-details-popup>
-
+<div class="container">
+  <div class="mt-2">
+    <button class="btn btn-sm btn-outline-primary" (click)="openProductDetails()">Add New Product</button>
+  </div>
 <table class="table">
   <thead>
     <tr>
@@ -22,11 +25,12 @@
         <td *ngIf="field.required">{{ product[field.name] }}</td>
       </ng-container>
       <td>
-        <button class="btn btn-sm btn-primary" (click)="openProductDetails(product)">View</button>
-        <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">Delete</button>
+        <button class="btn btn-sm btn-outline-primary mb-1" (click)="openProductDetails(product)">View</button>
+        <button class="btn btn-sm btn-outline-danger mb-1" (click)="deleteProduct(product)">X</button>
       </td>
     </tr>
   </tbody>
 </table>
+</div>
 
 

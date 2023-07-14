@@ -6,9 +6,9 @@ import { ReferenceDataHistoryComponent } from './components/reference-data-histo
 import { ProductsComponent } from './components/products/products.component';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },
+  //{ path: '', component: LandingPageComponent },
+  { path: '', component: ProductsComponent },
   { path: 'reference-data', component: ReferenceDataComponent },
-  // { path: 'history', component: ReferenceDataHistoryComponent },
   { path: 'history', component: ProductsComponent },
   
 ];
