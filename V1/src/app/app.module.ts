@@ -17,6 +17,8 @@ import { AddProductComponent } from './components/products/add-product/add-produ
 import { ProductFieldsComponent } from './components/reference-data/product-fields/product-fields.component';
 import { MaterialsComponent } from './components/reference-data/materials/materials.component';
 import { ProductDetailsPopupComponent } from './components/products/product-details-popup/product-details-popup.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterUserComponent } from './components/login/register-user/register-user.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ProductDetailsPopupComponent } from './components/products/product-deta
     AddProductComponent,
     ProductFieldsComponent,
     MaterialsComponent,
-    ProductDetailsPopupComponent
+    ProductDetailsPopupComponent,
+    LoginComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
