@@ -4,6 +4,7 @@ import { Product } from 'src/app/common/Inteface';
 import { ReferenceDataService } from 'src/app/common/services/reference-data-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductDetailsPopupComponent } from './product-details-popup/product-details-popup.component';
+import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -12,9 +13,12 @@ import { ProductDetailsPopupComponent } from './product-details-popup/product-de
 })
 export class ProductsComponent implements OnInit {
   products: Product[] | any = [];
+  filteredProducts: Product[] | any = [];
   productFields: any[] = []; // Array to store the product fields reference data
   selectedProduct: any;
   isPopupOpen: boolean = false;
+  filterTerm: any;
+  searchTerm: string = "";
 
   constructor(
     private productService: ProductService,
@@ -25,6 +29,23 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.fetchProductFields(); // Fetch the product fields reference data
     this.getProducts(); // Fetch the products data
+  }
+
+  filterProducts(type: string): void {
+    if (this.filterTerm.trim() === '') {
+      this.filteredProducts = this.products;
+      return;
+    }
+
+    this.filteredProducts = this.products.filter((data: any) =>
+      data[type].toLowerCase().includes(this.filterTerm.toLowerCase())
+    );
+  }
+
+  clear() {
+    this.filterTerm = "";
+    this.searchTerm = "";
+    this.filteredProducts = this.products;
   }
 
   fetchProductFields() {
@@ -42,6 +63,7 @@ export class ProductsComponent implements OnInit {
     this.productService.getProducts().subscribe(
       (products: Product[]) => {
         this.products = products;
+        this.filteredProducts = products;
       },
       (error) => {
         console.error('Error retrieving products:', error);
@@ -51,6 +73,9 @@ export class ProductsComponent implements OnInit {
 
   editProduct(product: Product): void {
     // If ID is there edit else add.
+    //const product:Product = this.formatProduct(product1);
+    //product.fiber = [{_id:"64a29c41057badf8ad3bd1ae"}]
+    //product.fabric = [{_id:"64a29c41057badf8ad3bd1ae"}]
     if (product._id) {
       debugger
       this.productService.editProduct(product).subscribe(
@@ -71,6 +96,12 @@ export class ProductsComponent implements OnInit {
         }
       );
     }
+  }
+  formatProduct(product1: Product) {
+   
+    // product1.forEach(ele => {
+      
+    // });
   }
 
   updateProductTable(updatedProduct: Product) {

@@ -9,3 +9,15 @@
 .mb10 {
     margin-bottom: 10px;
 }
+
+.nested-field {
+    flex:1
+}
+.nested-field:first-child {
+    flex: 2; /* This item will take twice the space of the others */
+  }
+
+  .save-btn-prod:disabled {
+    color: white;
+    background-color: #6c757d;
+  }

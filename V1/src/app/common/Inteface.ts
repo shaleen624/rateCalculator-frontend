@@ -14,8 +14,8 @@ export interface Product {
     overhead: string;
     others: string;
     totalPrice: number;
-    fabric: Fabric[];
-    fiber: Fiber[];
+    fabric: Fabric[]|any;
+    fiber: Fiber[]|any;
   }
   
   export interface Fabric {

@@ -6,9 +6,25 @@
   (closeProductDetails)="closeProductDetails()">
 </app-product-details-popup>
 <div class="container">
-  <div class="mt-2">
+  <div class="row mb-3 mt-3" >
+    <div class="col-md-2 ">
+      <input type="text" class="form-control" [(ngModel)]="filterTerm" (keyup)="filterProducts('name')"
+        placeholder="filter by Name" />
+    </div>
+    <div class="col-md-2 mb-3">
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="filterProducts('category')" placeholder="filter by Category" />
+      <!-- <select (change)="filterProducts($event)" class="form-select" >
+          <option *ngFor="let item of fiberArray" [ngValue]="item">{{item?.item}}</option>
+      </select> -->
+    </div>
+    <div class="col-md-4 mt-1">
+      <button class="btn btn-sm btn-outline-secondary mb-2" (click)="clear()">Reset</button>
+      <button class="btn btn-sm btn-outline-primary mb-2" (click)="openProductDetails()">Add New Product</button>
+    </div>
+    </div>
+  <!-- <div class="mt-2">
     <button class="btn btn-sm btn-outline-primary" (click)="openProductDetails()">Add New Product</button>
-  </div>
+  </div> -->
 <table class="table">
   <thead>
     <tr>
@@ -20,7 +36,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of filteredProducts">
       <ng-container *ngFor="let field of productFields">
         <td *ngIf="field.required">{{ product[field.name] }}</td>
       </ng-container>
