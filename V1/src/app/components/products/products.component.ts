@@ -4,6 +4,7 @@ import { Product } from 'src/app/common/Inteface';
 import { ReferenceDataService } from 'src/app/common/services/reference-data-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductDetailsPopupComponent } from './product-details-popup/product-details-popup.component';
+import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -51,6 +52,9 @@ export class ProductsComponent implements OnInit {
 
   editProduct(product: Product): void {
     // If ID is there edit else add.
+    //const product:Product = this.formatProduct(product1);
+    //product.fiber = [{_id:"64a29c41057badf8ad3bd1ae"}]
+    //product.fabric = [{_id:"64a29c41057badf8ad3bd1ae"}]
     if (product._id) {
       debugger
       this.productService.editProduct(product).subscribe(
@@ -71,6 +75,12 @@ export class ProductsComponent implements OnInit {
         }
       );
     }
+  }
+  formatProduct(product1: Product) {
+   
+    // product1.forEach(ele => {
+      
+    // });
   }
 
   updateProductTable(updatedProduct: Product) {

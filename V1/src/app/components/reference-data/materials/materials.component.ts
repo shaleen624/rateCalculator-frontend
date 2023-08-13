@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MATERIALS_CATEGRY, UNITS } from 'src/app/common/constants';
 import { ReferenceDataService } from 'src/app/common/services/reference-data-service.service';
 
 
@@ -19,6 +20,8 @@ interface DataRow {
 export class MaterialsComponent {
   referenceData!: any[];
   data: DataRow[] = [];
+  units = UNITS;
+  matCatgry = MATERIALS_CATEGRY;
   addingNewRow: boolean = false;
   newRow: DataRow = {
     _id: '',

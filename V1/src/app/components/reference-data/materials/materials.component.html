@@ -32,7 +32,10 @@
           </td>
           <td>
             <span *ngIf="!row.editMode">{{ row.category }}</span>
-            <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.category" />
+            <!-- <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.category" /> -->
+            <select *ngIf="row.editMode"  class="form-select" [(ngModel)]="row.category">
+              <option *ngFor="let item of matCatgry" [value]="item">{{item}}</option>
+            </select>
           </td>
           <td>
             <span *ngIf="!row.editMode">{{ row.rate }}</span>
@@ -40,7 +43,10 @@
           </td>
           <td>
             <span *ngIf="!row.editMode">{{ row.unit }}</span>
-            <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.unit" />
+            <!-- <input *ngIf="row.editMode" type="text" class="form-control" [(ngModel)]="row.unit" /> -->
+            <select *ngIf="row.editMode"  class="form-select" [(ngModel)]="row.unit">
+              <option *ngFor="let item of units" [value]="item">{{item}}</option>
+            </select>
           </td>
           <td>
             <button class="btn btn-sm btn-outline-primary mb-2" *ngIf="!row.editMode && !addingNewRow"

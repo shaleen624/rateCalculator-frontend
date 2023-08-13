@@ -1,6 +1,9 @@
-export const BASE_URL = "https://rc-dev.fluffpandastore.com";
+//export const BASE_URL = "https://rc-dev.fluffpandastore.com";
 //export const BASE_URL = "http://52.77.95.53:3000";
-//export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://localhost:3000';
+
+export const UNITS = ['Kg','gm', 'm', 'cm'];
+export const MATERIALS_CATEGRY = ['Fiber', 'Fabric'];
 
 export const nestedFieldsSample = [
   { name: 'type', label: 'Type', type: 'text', required: true, editing: true },
@@ -71,19 +74,19 @@ export const ADD_PRODUCT_MOCK = {
   fabric: [
     {
       type: 'Fabric',
-      rate: 10,
+      rate: '',
       qty: 2,
-      unit: 'Meters',
+      unit: '',
       total: '',
     },
   ],
   fiber: [
     {
       type: 'Fiber',
-      rate: 5,
+      rate: '',
       qty: 3,
-      unit: 'Kilograms',
-      total: 15,
+      unit: '',
+      total: '',
     },
   ],
   cutting: '10',

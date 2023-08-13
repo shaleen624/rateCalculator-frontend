@@ -8,53 +8,73 @@
     <form [formGroup]="productForm">
         <!-- <div *ngFor="let field of productFields">
             <div *ngIf="field.type !== 'nested'" class="form-group"> -->
-                <!-- Render the non-nested fields -->
-      <div class="row">
-        <div class="col-md-2" *ngFor="let field of productFields; let i = index">
-          <div class="form-group mb-3" *ngIf="field.type !== 'nested'">
-                <label>{{ field.label }}</label>
-                <input [type]="field.type" class="form-control" [formControlName]="field.name"
-                    [required]="field.required">
-                <div *ngIf="productForm.controls[field.name].invalid && productForm.controls[field.name].touched"
-                    class="text-danger">
-                    This field is required.
-                </div>
-            </div>
-        </div>
-        </div>
-            
-
-        <div *ngFor="let field of productFields; let i = index">   
-        <div *ngIf="field.type === 'nested'">
-            <h5>{{ field.label }}</h5>
-            <div class="nested-fields" formArrayName="{{ field.name }}">
-                <div *ngFor="let nestedRow of productForm.get(field.name)?.value; let rowIndex = index"
-                    [formGroupName]="rowIndex" class="d-flex ">
-                    <div class="nested-field mrgn5" *ngFor="let nestedField of field.fields">
-                        <label>{{ nestedField.label }}</label>
-                        <input [type]="nestedField.type" class="form-control " [formControlName]="nestedField.name">
-                    </div>
-                    <div class="nested-field-actions crossBtn">
-                        <button type="button" class="btn btn-outline-danger btn-sm"
-                            (click)="onRemoveNestedRowClick(field.name, rowIndex)">
-                            X
-                        </button>
+        <!-- Render the non-nested fields -->
+        <div class="row">
+            <div class="col-md-2" *ngFor="let field of productFields; let i = index">
+                <div class="form-group mb-3" *ngIf="field.type !== 'nested'">
+                    <label>{{ field.label }}</label>
+                    <input [type]="field.type" (change)="calculateTotalPrice()" class="form-control" [formControlName]="field.name"
+                        [required]="field.required">
+                    <div *ngIf="productForm.controls[field.name].invalid && productForm.controls[field.name].touched"
+                        class="text-danger">
+                        This field is required.
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm mt-2 mb-3" (click)="onAddNestedRowClick(field.name)">
-                Add Row
-            </button>
         </div>
 
 
-    </div>
+        <div *ngFor="let field of productFields; let i = index">
+            <div *ngIf="field.type === 'nested'">
+                <h5>{{ field.label }}</h5>
+                <div class="nested-fields" formArrayName="{{ field.name }}">
+                    <div *ngFor="let nestedRow of productForm.get(field.name)?.value; let rowIndex = index"
+                        [formGroupName]="rowIndex" class="d-flex ">
+                        <div class="nested-field mrgn5" *ngFor="let nestedField of field.fields">
+                            <label>{{ nestedField.label }}</label>
+                            <input *ngIf="nestedField.label !=='Type'" (change)="calculateTotalPrice()" [type]="nestedField.type" class="form-control"
+                                [formControlName]="nestedField.name" [readonly]="nestedField.name === 'rate' || nestedField.name === 'unit' || nestedField.name ==='total'">
+                            <!-- field.label ==='Fabric' || field.label ==='Fiber' &&  -->
+                            <select *ngIf="nestedField.label ==='Type'" (change)="onMaterialSelect($event, field?.name, rowIndex)" class="form-select"
+                                [formControlName]="nestedField.name">
+                                <ng-container *ngIf="field.label ==='Fiber'">
+                                    <option *ngFor="let item of fiberArray" [value]="item.item">{{item?.item}}</option>
+                                </ng-container>
+                                <ng-container *ngIf="field.label ==='Fabric'">
+                                    <option *ngFor="let item of fabricArray" [value]="item.item">{{item?.item}}</option>
+                                </ng-container>
+                            </select>
+                            
+                            <!-- <select *ngIf="nestedField.label ==='Type' &&field.label ==='Fiber'" #fiber
+                                (change)="onMaterialSelect($event)" class="form-select"
+                                [formControlName]="nestedField.name">
+                                <option *ngFor="let item of fiberArray" [ngValue]="item">{{item?.item}}</option>
+                            </select> -->
+                        </div>
+                        <div class="nested-field-actions crossBtn">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                (click)="onRemoveNestedRowClick(field.name, rowIndex)">
+                                X
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm mt-2 mb-3"
+                    (click)="onAddNestedRowClick(field.name)">
+                    Add Row
+                </button>
+            </div>
+
+
+        </div>
 
 
         <!-- </div> -->
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" [disabled]="productForm.invalid" (click)="onUpdateClick()">{{saveLabel}}</button>
-    <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Close btn click')">Close</button>
+    <button type="button" class="btn btn-outline-success" [disabled]="productForm.invalid"
+        (click)="onUpdateClick()">{{saveLabel}}</button>
+    <button type="button" class="btn btn-outline-secondary"
+        (click)="activeModal.dismiss('Close btn click')">Close</button>
 </div>
