@@ -13,9 +13,12 @@ import { elementAt } from 'rxjs';
 })
 export class ProductsComponent implements OnInit {
   products: Product[] | any = [];
+  filteredProducts: Product[] | any = [];
   productFields: any[] = []; // Array to store the product fields reference data
   selectedProduct: any;
   isPopupOpen: boolean = false;
+  filterTerm: any;
+  searchTerm: string = "";
 
   constructor(
     private productService: ProductService,
@@ -26,6 +29,23 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.fetchProductFields(); // Fetch the product fields reference data
     this.getProducts(); // Fetch the products data
+  }
+
+  filterProducts(type: string): void {
+    if (this.filterTerm.trim() === '') {
+      this.filteredProducts = this.products;
+      return;
+    }
+
+    this.filteredProducts = this.products.filter((data: any) =>
+      data[type].toLowerCase().includes(this.filterTerm.toLowerCase())
+    );
+  }
+
+  clear() {
+    this.filterTerm = "";
+    this.searchTerm = "";
+    this.filteredProducts = this.products;
   }
 
   fetchProductFields() {
@@ -43,6 +63,7 @@ export class ProductsComponent implements OnInit {
     this.productService.getProducts().subscribe(
       (products: Product[]) => {
         this.products = products;
+        this.filteredProducts = products;
       },
       (error) => {
         console.error('Error retrieving products:', error);

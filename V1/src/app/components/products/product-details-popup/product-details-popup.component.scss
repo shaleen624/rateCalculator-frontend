@@ -16,3 +16,8 @@
 .nested-field:first-child {
     flex: 2; /* This item will take twice the space of the others */
   }
+
+  .save-btn-prod:disabled {
+    color: white;
+    background-color: #6c757d;
+  }
