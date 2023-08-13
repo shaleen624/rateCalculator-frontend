@@ -3,7 +3,7 @@
 export const BASE_URL = 'http://localhost:3000';
 
 export const UNITS = ['Kg','gm', 'm', 'cm'];
-export const MATERIALS_CATEGRY = ['Fiber', 'Fabric'];
+export const MATERIALS_CATEGRY = ['fiber', 'fabric'];
 
 export const nestedFieldsSample = [
   { name: 'type', label: 'Type', type: 'text', required: true, editing: true },
