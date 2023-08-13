@@ -114,7 +114,7 @@ export class ProductDetailsPopupComponent {
     this.productForm = this.formBuilder.group(formGroup);
 
     // Set mock values
-    this.productForm.setValue(ADD_PRODUCT_MOCK);
+    //this.productForm.setValue(ADD_PRODUCT_MOCK);
   }
 
   // onMaterialSelect(event:any) {

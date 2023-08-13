@@ -13,7 +13,7 @@
             <div class="col-md-2" *ngFor="let field of productFields; let i = index">
                 <div class="form-group mb-3" *ngIf="field.type !== 'nested'">
                     <label>{{ field.label }}</label>
-                    <input [type]="field.type" (change)="calculateTotalPrice()" class="form-control" [formControlName]="field.name"
+                    <input [type]="field.type" (change)="calculateTotalPrice()" [readonly]="field.name === 'totalPrice'" class="form-control" [formControlName]="field.name"
                         [required]="field.required">
                     <div *ngIf="productForm.controls[field.name].invalid && productForm.controls[field.name].touched"
                         class="text-danger">
